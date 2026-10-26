@@ -1,0 +1,66 @@
+# Decap CMS 配置 —— 豆豆的技术博客发博后台
+# 文件位置：blog/source/admin/config.yml → 线上地址 https://thudou.github.io/admin/config.yml
+# 两个文章集合分别对应两条路线：
+#   posts        → blog/source/_posts/      主站（Hexo+Butterfly，https://thudou.github.io/）
+#   fuwari-posts → fuwari/src/content/posts/ 高级版（Astro+Fuwari，https://thudou.github.io/blog/）
+
+backend:
+  name: github
+  repo: THUDou/blog-source
+  branch: main
+  # PKCE 公开客户端认证：浏览器直接用 code + code_verifier 向 GitHub 换 token，
+  # 不需要 client_secret，也不需要任何 OAuth 代理/中转服务。
+  # app_id 就是 GitHub OAuth App 的 Client ID（公开信息，泄露无风险）。
+  # OAuth App 的 Authorization callback URL 必须设为 https://thudou.github.io/admin/
+  auth_type: pkce
+  app_id: Ov23limrxKWTEXOAFIdF
+
+site_domain: thudou.github.io
+
+# simple = 在后台点“发布”后直接提交到 main 分支，自动触发 Actions 构建上线
+publish_mode: simple
+
+# 允许本地 npx decap-server 调试后台
+local_backend: true
+
+# 默认媒体库（主站文章用）：图片传到 blog/source/img/upload，文中引用 /img/upload/xxx
+media_folder: "blog/source/img/upload"
+public_folder: "/img/upload"
+
+collections:
+  # ============ 集合一：主站文章（Hexo） ============
+  - name: "posts"
+    label: "主站文章"
+    folder: "blog/source/_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime", format: "YYYY-MM-DD HH:mm:ss", date_format: "YYYY-MM-DD", time_format: "HH:mm:ss" }
+      - { label: "标签", name: "tags", widget: "list", required: false, hint: "回车分隔，逐个添加" }
+      - { label: "分类", name: "categories", widget: "list", required: false }
+      - { label: "封面图", name: "cover", widget: "string", required: false, hint: "可选，填写图片 URL，显示在文章页顶部" }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  # ============ 集合二：/blog 文章（Fuwari） ============
+  - name: "fuwari-posts"
+    label: "/blog 文章"
+    folder: "fuwari/src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    # Fuwari 静态资源在 fuwari/public/，线上挂 /blog 前缀，故 public_folder 带 /blog
+    media_folder: "fuwari/public/images"
+    public_folder: "/blog/images"
+    editor:
+      preview: true
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "摘要", name: "description", widget: "string", required: false, hint: "显示在列表和摘要卡片上" }
+      - { label: "发布日期", name: "published", widget: "datetime", format: "YYYY-MM-DD", date_format: "YYYY-MM-DD" }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "分类", name: "category", widget: "string", required: false }
+      - { label: "封面图", name: "image", widget: "image", required: false, hint: "上传后自动填入 /blog/images/ 路径" }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false, hint: "打开后文章不会出现在 /blog 列表" }
+      - { label: "正文", name: "body", widget: "markdown" }
