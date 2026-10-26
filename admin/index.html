@@ -130,15 +130,24 @@
     async function startDeviceFlow() {
       $('btn-start').disabled = true;
       try {
-        var r = await fetch('https://github.com/login/device/code', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-          body: 'client_id=' + encodeURIComponent(CLIENT_ID) + '&scope=' + encodeURIComponent(SCOPE)
-        });
-        var d = await r.json();
-        if (!d.device_code) {
+        // 带重试地获取设备码：GitHub 偶发限流/网络抖动，重试 3 次
+        var d = null, lastErr = null;
+        for (var attempt = 0; attempt < 3; attempt++) {
+          try {
+            var r = await fetch('https://github.com/login/device/code', {
+              method: 'POST',
+              cache: 'no-store',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+              body: 'client_id=' + encodeURIComponent(CLIENT_ID) + '&scope=' + encodeURIComponent(SCOPE)
+            });
+            if (r.ok) { d = await r.json(); break; }
+            lastErr = new Error('HTTP ' + r.status);
+          } catch (e) { lastErr = e; }
+          if (attempt < 2) await sleep(1500 * (attempt + 1));
+        }
+        if (!d || !d.device_code) {
           $('btn-start').disabled = false;
-          return fail('无法获取验证码：' + (d.error_description || d.error || '未知错误'));
+          return fail('连不上 GitHub（需开代理），或请求太频繁被限流——请等 1 分钟后点重试。');
         }
 
         show('step-code');
