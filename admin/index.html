@@ -11,89 +11,93 @@
       margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       background: linear-gradient(160deg, #f7f8fb 0%, #eef1f7 100%);
-      color: #1f2430;
+      color: #1f2430; padding: 24px 16px;
     }
     .card {
-      width: min(92vw, 460px); background: #fff; border-radius: 18px; padding: 36px 32px 30px;
+      width: min(94vw, 520px); background: #fff; border-radius: 18px; padding: 34px 30px 28px;
       box-shadow: 0 18px 48px rgba(24, 32, 56, .10), 0 2px 6px rgba(24, 32, 56, .05);
-      text-align: center;
     }
-    .logo { font-size: 22px; font-weight: 700; letter-spacing: -.3px; margin-bottom: 6px; }
+    .head { text-align: center; }
+    .logo { font-size: 21px; font-weight: 700; letter-spacing: -.3px; }
     .logo span { color: #ff2d8a; }
-    .sub { font-size: 13px; color: #6b7383; margin-bottom: 26px; }
-    button.primary {
-      width: 100%; padding: 13px 18px; border: 0; border-radius: 11px; cursor: pointer;
-      font-size: 15px; font-weight: 600; color: #fff; background: #24292f;
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-      transition: transform .12s ease, background .2s ease, opacity .2s ease;
+    .sub { font-size: 13px; color: #6b7383; margin: 6px 0 24px; }
+    button {
+      width: 100%; padding: 12px 16px; border-radius: 11px; cursor: pointer; font-size: 14.5px;
+      font-weight: 600; border: 1px solid transparent; transition: all .16s ease;
     }
+    button.primary { color: #fff; background: #24292f; display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
     button.primary:hover { background: #000; transform: translateY(-1px); }
-    button.primary:disabled { opacity: .55; cursor: default; transform: none; }
-    button.ghost {
-      width: 100%; margin-top: 10px; padding: 11px 16px; border-radius: 11px; cursor: pointer;
-      font-size: 14px; font-weight: 500; color: #24292f; background: #f2f4f8; border: 1px solid #e3e7ef;
-    }
+    button.primary:disabled { opacity: .5; cursor: default; transform: none; }
+    button.ghost { color: #24292f; background: #f2f4f8; border-color: #e3e7ef; font-weight: 500; }
     button.ghost:hover { background: #e9edf4; }
-    .code-box { margin: 4px 0 14px; padding: 16px; border-radius: 13px; background: #f6f8fc; border: 1px dashed #ccd4e2; }
-    .code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 30px; font-weight: 700; letter-spacing: 3px; color: #111827; user-select: all;
+    .steps { margin: 18px 0 0; padding: 0; list-style: none; counter-reset: s; }
+    .steps li {
+      counter-increment: s; position: relative; padding: 0 0 14px 34px;
+      font-size: 13.5px; line-height: 1.65; color: #3d4657;
     }
-    .hint { font-size: 13px; line-height: 1.7; color: #5b6474; margin: 12px 0 0; }
-    .hint a { color: #0969da; text-decoration: none; font-weight: 600; }
-    .hint a:hover { text-decoration: underline; }
-    .status { margin-top: 16px; font-size: 13px; color: #6b7383; min-height: 20px; }
+    .steps li::before {
+      content: counter(s); position: absolute; left: 0; top: 1px; width: 22px; height: 22px;
+      border-radius: 50%; background: #eef1f7; color: #4a5568; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .steps a { color: #0969da; text-decoration: none; font-weight: 600; word-break: break-all; }
+    .steps a:hover { text-decoration: underline; }
+    .token-row { display: flex; gap: 8px; margin-top: 4px; }
+    .token-row input {
+      flex: 1; min-width: 0; padding: 11px 13px; border-radius: 10px; border: 1px solid #d8dee9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: #1f2430;
+      outline: none; transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    .token-row input:focus { border-color: #24292f; box-shadow: 0 0 0 3px rgba(36, 41, 47, .08); }
+    .token-row button { width: auto; padding: 11px 18px; white-space: nowrap; }
+    .status { margin-top: 14px; font-size: 13px; min-height: 19px; text-align: center; }
     .status.ok { color: #1a7f37; font-weight: 600; }
     .status.err { color: #cf222e; font-weight: 600; }
-    .spin {
-      display: inline-block; width: 13px; height: 13px; border: 2px solid #cfd6e4;
-      border-top-color: #24292f; border-radius: 50%; animation: sp .8s linear infinite; vertical-align: -2px; margin-right: 6px;
-    }
-    @keyframes sp { to { transform: rotate(360deg); } }
+    .foot { margin-top: 20px; padding-top: 16px; border-top: 1px solid #eef1f6; font-size: 11.5px; line-height: 1.7; color: #98a1b0; text-align: center; }
     [hidden] { display: none !important; }
-    .mini { font-size: 12px; color: #98a1b0; margin-top: 18px; line-height: 1.6; }
-    #cms-root { display: none; }
+    .linkish { background: none; border: 0; padding: 0; width: auto; color: #0969da; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .linkish:hover { text-decoration: underline; }
+    .center { text-align: center; margin-top: 14px; }
   </style>
 </head>
 <body>
   <div class="card" id="gate">
-    <div class="logo">豆豆的<span>技术博客</span></div>
-    <div class="sub">发博后台 · 使用 GitHub 账号登录</div>
+    <div class="head">
+      <div class="logo">豆豆的<span>技术博客</span></div>
+      <div class="sub">发博后台</div>
+    </div>
 
     <div id="step-start">
       <button class="primary" id="btn-start">
-        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        用 GitHub 登录
+        <svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        用 GitHub 令牌登录
       </button>
-      <p class="mini">首次登录需在 GitHub 输入一次验证码，之后会自动记住登录状态。</p>
+      <div class="center"><button class="linkish" id="btn-help">怎么获取令牌？</button></div>
     </div>
 
-    <div id="step-code" hidden>
-      <div class="code-box">
-        <div class="code" id="usercode">····-····</div>
+    <div id="step-token" hidden>
+      <ol class="steps">
+        <li>打开 <a id="tok-link" href="https://github.com/settings/tokens/new?scopes=repo&description=%E8%B1%86%E8%B1%86%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%8D%9A%E5%90%8E%E5%8F%B0" target="_blank" rel="noopener">github.com/settings/tokens/new</a>（权限已预填好 <code>repo</code>，需先开代理）</li>
+        <li>页面底部点 <b>Generate token</b>，复制以 <code>ghp_</code> 开头的令牌</li>
+        <li>粘贴到下面，点登录</li>
+      </ol>
+      <div class="token-row">
+        <input id="tok-input" type="password" placeholder="ghp_xxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false">
+        <button class="primary" id="btn-save">登录</button>
       </div>
-      <button class="ghost" id="btn-open">打开 GitHub 授权页 ↗</button>
-      <p class="hint">在上面打开的页面里输入这串验证码，然后点 <b>Authorize</b>。本页会自动检测并进入后台。</p>
-      <div class="status" id="status"><span class="spin"></span>等待授权…</div>
+      <div class="status" id="status"></div>
+      <div class="center"><button class="linkish" id="btn-back">返回</button></div>
     </div>
 
-    <div id="step-error" hidden>
-      <p class="status err" id="errmsg">出错了</p>
-      <button class="ghost" id="btn-retry">重试</button>
+    <div class="foot">
+      令牌只保存在你自己的浏览器（localStorage），不会上传到任何服务器。<br>
+      换电脑或清理浏览器数据后需要重新登录一次。
     </div>
   </div>
 
   <script>
-    // ── 配置 ──────────────────────────────────────────────
-    // GitHub OAuth App 的 Client ID（公开信息）。已开启 Device Flow。
-    var CLIENT_ID = 'Ov23limrxKWTEXOAFIdF';
-    var SCOPE = 'repo';                     // 读写仓库
-    var STORAGE_KEY = 'decap-cms-user';     // Decap CMS 读取登录态的键
-    var VERIFIER_KEY = 'decap-cms-pkce-verifier-code';
-    // ──────────────────────────────────────────────────────
-
+    var STORAGE_KEY = 'decap-cms-user';
     function $(id) { return document.getElementById(id); }
-    function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
     function getToken() {
       try {
@@ -103,21 +107,23 @@
     }
 
     function show(id) {
-      var list = ['step-start', 'step-code', 'step-error'];
-      for (var i = 0; i < list.length; i++) $(list[i]).hidden = (list[i] !== id);
+      ['step-start', 'step-token'].forEach(function (s) { $(s).hidden = (s !== id); });
     }
 
-    function fail(msg) { show('step-error'); $('errmsg').textContent = msg; }
+    function setStatus(msg, cls) {
+      var el = $('status');
+      el.className = 'status' + (cls ? ' ' + cls : '');
+      el.textContent = msg || '';
+    }
 
     function verifyToken(token) {
       return fetch('https://api.github.com/user', {
         headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' }
       }).then(function (r) {
-        if (!r.ok) return false;
-        return r.json().then(function (u) {
-          return { login: u.login, name: u.name || u.login, email: u.email || '' };
-        });
-      }).catch(function () { return null; });   // 网络异常 → null，不拦
+        if (r.status === 401) return false;
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      });
     }
 
     function loadCMS() {
@@ -127,98 +133,49 @@
       document.body.appendChild(s);
     }
 
-    async function startDeviceFlow() {
-      $('btn-start').disabled = true;
-      try {
-        // 带重试地获取设备码：GitHub 偶发限流/网络抖动，重试 3 次
-        var d = null, lastErr = null;
-        for (var attempt = 0; attempt < 3; attempt++) {
-          try {
-            var r = await fetch('https://github.com/login/device/code', {
-              method: 'POST',
-              cache: 'no-store',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-              body: 'client_id=' + encodeURIComponent(CLIENT_ID) + '&scope=' + encodeURIComponent(SCOPE)
-            });
-            if (r.ok) { d = await r.json(); break; }
-            lastErr = new Error('HTTP ' + r.status);
-          } catch (e) { lastErr = e; }
-          if (attempt < 2) await sleep(1500 * (attempt + 1));
-        }
-        if (!d || !d.device_code) {
-          $('btn-start').disabled = false;
-          return fail('连不上 GitHub（需开代理），或请求太频繁被限流——请等 1 分钟后点重试。');
-        }
+    $('btn-start').onclick = function () { show('step-token'); setStatus(''); $('tok-input').focus(); };
+    $('btn-help').onclick = function () { show('step-token'); setStatus(''); };
+    $('btn-back').onclick = function () { show('step-start'); setStatus(''); };
 
-        show('step-code');
-        $('usercode').textContent = d.user_code;
-        $('btn-open').onclick = function () {
-          window.open(d.verification_uri || 'https://github.com/login/device', '_blank', 'noopener');
-        };
-        try { await navigator.clipboard.writeText(d.user_code); } catch (e) {}
-
-        var interval = (d.interval || 5) * 1000;
-        var deadline = Date.now() + (d.expires_in || 900) * 1000;
-        var statusEl = $('status');
-
-        while (Date.now() < deadline) {
-          await sleep(interval);
-          var t;
-          try {
-            var tr = await fetch('https://github.com/login/oauth/access_token', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
-              body: 'client_id=' + encodeURIComponent(CLIENT_ID) +
-                '&device_code=' + encodeURIComponent(d.device_code) +
-                '&grant_type=' + encodeURIComponent('urn:ietf:params:oauth:grant-type:device_code')
-            });
-            t = await tr.json();
-          } catch (e) { continue; }
-
-          if (t.access_token) {
-            statusEl.className = 'status ok';
-            statusEl.textContent = '✓ 授权成功，正在进入后台…';
-            var info = (await verifyToken(t.access_token)) || {};
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({
-              token: t.access_token,
-              provider: 'github',
-              backendName: 'github',
-              login: info.login,
-              name: info.name,
-              email: info.email
-            }));
-            setTimeout(function () { location.replace(location.pathname + location.search); }, 250);
-            return;
-          }
-          if (t.error === 'authorization_pending') continue;
-          if (t.error === 'slow_down') { interval += 5000; continue; }
-          if (t.error === 'expired_token') return fail('验证码已过期，请重新登录');
-          if (t.error === 'access_denied') return fail('你取消了授权');
-          return fail(t.error_description || t.error || '授权失败');
-        }
-        fail('等待超时，请重试');
-      } catch (e) {
-        $('btn-start').disabled = false;
-        var msg = String(e && e.message || e);
-        if (/Failed to fetch|NetworkError|Load failed/i.test(msg)) {
-          fail('连不上 GitHub（需开代理），或请求太频繁被限流——请等 1 分钟后点重试。');
-        } else {
-          fail('网络错误：' + msg.slice(0, 90));
-        }
+    $('btn-save').onclick = async function () {
+      var val = ($('tok-input').value || '').trim();
+      if (!val) return setStatus('请粘贴令牌', 'err');
+      if (!/^(ghp_|github_pat_)/.test(val)) {
+        return setStatus('令牌格式不对，应该以 ghp_ 开头', 'err');
       }
-    }
+      $('btn-save').disabled = true;
+      setStatus('验证中…');
+      try {
+        var u = await verifyToken(val);
+        if (!u) { setStatus('令牌无效或已过期，请重新生成', 'err'); $('btn-save').disabled = false; return; }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          token: val, provider: 'github', backendName: 'github',
+          login: u.login, name: u.name || u.login, email: u.email || ''
+        }));
+        setStatus('✓ 登录成功，正在进入后台…', 'ok');
+        setTimeout(function () { location.reload(); }, 350);
+      } catch (e) {
+        setStatus('连不上 GitHub（需开代理）：' + String(e.message).slice(0, 60), 'err');
+        $('btn-save').disabled = false;
+      }
+    };
 
-    $('btn-start').onclick = startDeviceFlow;
-    $('btn-retry').onclick = function () { $('btn-start').disabled = false; show('step-start'); };
+    $('tok-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') $('btn-save').click();
+    });
 
-    // 启动：有有效 token 直接进后台，否则显示登录
+    // 启动：有有效 token 直接进后台
     (async function boot() {
       var token = getToken();
       if (!token) return show('step-start');
-      var info = await verifyToken(token);
-      if (info) return loadCMS();          // 有效
-      if (info === null) return loadCMS(); // 网络不通 → 交给 CMS
-      localStorage.removeItem(STORAGE_KEY);
+      try {
+        var u = await verifyToken(token);
+        if (u) return loadCMS();
+        if (u === false) { localStorage.removeItem(STORAGE_KEY); return show('step-start'); }
+      } catch (e) {
+        // 网络不通时先让 CMS 自己判断，避免断网打不开
+        return loadCMS();
+      }
       show('step-start');
     })();
   </script>
