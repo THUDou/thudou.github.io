@@ -190,7 +190,12 @@
         fail('等待超时，请重试');
       } catch (e) {
         $('btn-start').disabled = false;
-        fail('网络错误（访问 GitHub 需开代理）：' + String(e).slice(0, 80));
+        var msg = String(e && e.message || e);
+        if (/Failed to fetch|NetworkError|Load failed/i.test(msg)) {
+          fail('连不上 GitHub（需开代理），或请求太频繁被限流——请等 1 分钟后点重试。');
+        } else {
+          fail('网络错误：' + msg.slice(0, 90));
+        }
       }
     }
 
