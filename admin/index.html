@@ -140,8 +140,8 @@
     $('btn-save').onclick = async function () {
       var val = ($('tok-input').value || '').trim();
       if (!val) return setStatus('请粘贴令牌', 'err');
-      if (!/^(ghp_|github_pat_)/.test(val)) {
-        return setStatus('令牌格式不对，应该以 ghp_ 开头', 'err');
+      if (!/^(ghp_|github_pat_|gho_|ghu_)/.test(val)) {
+        return setStatus('令牌格式不对，应该以 ghp_ 或 github_pat_ 开头', 'err');
       }
       $('btn-save').disabled = true;
       setStatus('验证中…');
