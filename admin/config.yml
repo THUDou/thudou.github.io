@@ -8,12 +8,12 @@ backend:
   name: github
   repo: THUDou/blog-source
   branch: main
-  # PKCE 公开客户端认证：浏览器直接用 code + code_verifier 向 GitHub 换 token，
-  # 不需要 client_secret，也不需要任何 OAuth 代理/中转服务。
-  # app_id 就是 GitHub OAuth App 的 Client ID（公开信息，泄露无风险）。
-  # OAuth App 的 Authorization callback URL 必须设为 https://thudou.github.io/admin/
-  auth_type: pkce
-  app_id: Ov23limrxKWTEXOAFIdF
+  # 登录方式：本后台用「访问令牌登录」（见同目录 index.html 的登录页），
+  # 不使用 Decap 自带的 GitHub OAuth 按钮。
+  # 原因（已实测）：Decap 的 GitHub backend 只有 NetlifyAuthenticator（必须自建 OAuth 代理），
+  # 不支持 PKCE（仅 GitLab/Gitea 支持）；GitHub 的 device flow 端点不返回 CORS 头，
+  # 浏览器页面无法直连；GitHub 官方也已搁置 SPA 的 client-side PKCE 计划。
+  # 令牌存在浏览器 localStorage，不经过任何第三方服务器。
 
 site_domain: thudou.github.io
 
