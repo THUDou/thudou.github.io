@@ -132,8 +132,8 @@
       try {
         var r = await fetch('https://github.com/login/device/code', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ client_id: CLIENT_ID, scope: SCOPE })
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+          body: 'client_id=' + encodeURIComponent(CLIENT_ID) + '&scope=' + encodeURIComponent(SCOPE)
         });
         var d = await r.json();
         if (!d.device_code) {
@@ -158,12 +158,10 @@
           try {
             var tr = await fetch('https://github.com/login/oauth/access_token', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-              body: JSON.stringify({
-                client_id: CLIENT_ID,
-                device_code: d.device_code,
-                grant_type: 'urn:ietf:params:oauth:grant-type:device_code'
-              })
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+              body: 'client_id=' + encodeURIComponent(CLIENT_ID) +
+                '&device_code=' + encodeURIComponent(d.device_code) +
+                '&grant_type=' + encodeURIComponent('urn:ietf:params:oauth:grant-type:device_code')
             });
             t = await tr.json();
           } catch (e) { continue; }
